@@ -5,7 +5,7 @@ import tickedUpSound from './../audio/click-21156.mp3'
 import {useState} from "react";
 import {todoList} from "../func/values";
 
-export function TodoList_Add(props) {
+export function TodoListAdd(props) {
     const [taskName, setTaskName] = useState("");
 
     const handleInputChange = (event) => {
@@ -38,17 +38,17 @@ export function TodoList_Add(props) {
                 }
             }}
             />
-            <button type={"button"} className={"text-white"} onClick={handleAddButtonClick}>
-                Přidat
+            <button type={"button"} className={"text-white px-4 border rounded-md"} onClick={handleAddButtonClick}>
+                Add to TODO list
             </button>
-            <button type={"button"} className={"text-white"} onClick={removeSelf}>
-                OK
+            <button type={"button"} className={"text-white px-4 border rounded-md"} onClick={removeSelf}>
+                Hide
             </button>
         </div>
     )
 }
 
-export function TodoList_Item({NameOfTask}) {
+export function TodoListItem({NameOfTask}) {
     console.log(NameOfTask)
     const taskName = NameOfTask.toString()
     return (

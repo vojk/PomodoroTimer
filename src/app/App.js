@@ -2,15 +2,9 @@ import './styles/App.css';
 import './styles/output.css'
 import Timer from "./components/Timer";
 import ButtonsSwitchMode from "./components/ButtonsSwitchMode";
-import {TodoList_Item, TodoList_Add} from "./components/TodoList";
+import {TodoListItem, TodoListAdd} from "./components/TodoList";
 import {useState} from "react";
-//import {SettingsButton, SettingsMenu} from "./components/Settings";
-//<div className={"absolute top-4 left-4"}>
-//                 <SettingsButton/>
-//             </div>
-//             <div className={"absolute w-screen h-screen flex justify-center items-center"}>
-//                 <SettingsMenu/>
-//             </div>
+import {SettingsButton, SettingsMenu} from "./components/Settings";
 
 function App() {
     const [todoList, setTodoList] = useState([]);
@@ -19,8 +13,15 @@ function App() {
         setTodoList([...todoList, { NameOfTask: taskName }]);
     }
 
+
     return (
         <div className={"bg-day-background bg-cover bg-center bg-no-repeat"} id={"main_container_of_app"}>
+            <div className={"absolute top-4 left-4"}>
+                <SettingsButton/>
+            </div>
+            <div className={"absolute w-screen h-screen flex justify-center items-center bg-black/40 backdrop-blur-sm z-20 hidden"} id={"main_container_of_settings"}>
+                <SettingsMenu/>
+            </div>
             <div
                 className={"bg-gradient-to-br from-cyan-900 via-cyan-800/50 via-65% to-cyan-600/80 w-screen h-screen flex justify-center items-center"}>
                 <div>
@@ -39,12 +40,12 @@ function App() {
                 <div id={"Todo_List_overview"} className={"flex flex-col gap-2"}>
                     {todoList.map((item) => {
                             return (
-                                <TodoList_Item NameOfTask={item["NameOfTask"]}></TodoList_Item>
+                                <TodoListItem NameOfTask={item["NameOfTask"]}></TodoListItem>
                             )
                         }
                     )}
                 </div>
-                <TodoList_Add handleAddTask={handleAddTask}></TodoList_Add>
+                <TodoListAdd handleAddTask={handleAddTask}></TodoListAdd>
             </div>
         </div>
     );

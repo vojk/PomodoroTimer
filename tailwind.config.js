@@ -6,8 +6,8 @@ module.exports = {
     theme: {
         extend: {
             backgroundImage:{
-                'day-background': "url('./../svg/backgrounds/day_time_lofi.png')",
-                'night-background': "url('./../svg/backgrounds/night_time_lofi.png')"
+                'day-background': "url('./../svg/backgrounds/day_time_lofi-min.png')",
+                'night-background': "url('./../svg/backgrounds/night_time_lofi-min.png')"
             }
         },
     },

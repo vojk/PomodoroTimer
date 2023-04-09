@@ -10,5 +10,26 @@ export const values = {
 //JSON.parse(window.localStorage.getItem("values")) //pro načtení
 
 
+if (JSON.parse(window.localStorage.getItem("values")) !== "") {
+    JSON.parse(window.localStorage.getItem("values"), (key, value) => {
+        if (value.toString() !== "[object Object]") {
+            console.log(key + ": " + value)
+            values[key] = value
+        }
+    })
+}
+
+
 export let todoList = []
+
+
+export const blockInvalidChar = e => {
+    const regex = /[0-9]/;
+    if (!regex.test(e.key) && e.key !== 'Backspace') {
+        e.preventDefault();
+    }
+};
+
+
+//export const blockInvalidChar = e => "/[a-zA-Z+-]/".includes(e.key) && e.preventDefault();
 
