@@ -10,7 +10,7 @@ function App() {
     const [todoList, setTodoList] = useState([]);
 
     const handleAddTask = (taskName) => {
-        setTodoList([...todoList, { NameOfTask: taskName }]);
+        setTodoList([...todoList, {NameOfTask: taskName}]);
     }
 
 
@@ -19,16 +19,16 @@ function App() {
             <div className={"absolute top-4 left-4"}>
                 <SettingsButton/>
             </div>
-            <div className={"absolute w-screen h-screen flex justify-center items-center bg-black/40 backdrop-blur-sm z-20 hidden"} id={"main_container_of_settings"}>
+            <div
+                className={"absolute w-screen h-screen flex justify-center items-center bg-black/40 backdrop-blur-sm z-20 hidden"}
+                id={"main_container_of_settings"}>
                 <SettingsMenu/>
             </div>
             <div
                 className={"bg-gradient-to-br from-cyan-900 via-cyan-800/50 via-65% to-cyan-600/80 w-screen h-screen flex justify-center items-center"}>
                 <div>
                     <div className={"mb-4 flex justify-between gap-2"}>
-                        <div>
-                            <ButtonsSwitchMode text={"Work"} type={"work"} isActive={true}></ButtonsSwitchMode>
-                        </div>
+                        <ButtonsSwitchMode text={"Work"} type={"work"} isActive={true}></ButtonsSwitchMode>
                         <ButtonsSwitchMode text={"Short Brake"} type={"short_brake"}></ButtonsSwitchMode>
                         <ButtonsSwitchMode text={"Long Brake"} type={"long_brake"}></ButtonsSwitchMode>
                     </div>
@@ -36,7 +36,7 @@ function App() {
                 </div>
             </div>
 
-            <div className={"absolute bottom-4 left-4 flex flex-col gap-2"}>
+            <div className={"absolute bottom-4 left-4 flex flex-col gap-2 sm:left-0"}>
                 <div id={"Todo_List_overview"} className={"flex flex-col gap-2"}>
                     {todoList.map((item) => {
                             return (

@@ -156,15 +156,15 @@ export function SettingsMenu() {
     }
 
     return (
-        <div className={"bg-neutral-900 w-2/3 h-2/3 flex flex-col rounded-2xl text-white relative"}
+        <div className={"bg-neutral-900 w-2/3 h-2/3 flex flex-col rounded-2xl text-white relative min-h-[34rem] min-w-[42rem] sm:min-w-full sm:w-full sm:h-4/5"}
              id={"settingMenuContainer"}>
             <div className={"flex border-b border-b-gray-800 items-center p-3 pl-8 pr-8 justify-between"}>
                 <h1 className={"text-2xl font-bold mt-0.5 select-none"}>Settings</h1>
                 <img src={Close} alt="" className={"cursor-pointer"} onClick={SettingsView} id={"closeButton"}/>
             </div>
-            <div className={"flex flex-1"}>
-                <div className={"border-r border-r-gray-800 p-12 pt-10"}>
-                    <ul className={"flex flex-col gap-4 text-xl select-none"}>
+            <div className={"flex flex-1 sm:flex-col"}>
+                <div className={"border-r border-r-gray-800 p-12 pt-10 sm:border-none sm:py-8"}>
+                    <ul className={"flex flex-col gap-4 text-xl select-none sm:flex-row sm:justify-between"}>
                         <li className={"cursor-pointer line-through text-gray-700"}>
                             General
                         </li>
@@ -177,8 +177,8 @@ export function SettingsMenu() {
                     </ul>
                 </div>
 
-                <div className={"p-8 w-full flex flex-col items-center"} id={"TimerSettingsMenu"}>
-                    <div className={"w-2/3"}>
+                <div className={"p-8 w-full flex flex-col items-center min-h-[29rem] sm:py-2 overflow-scroll h-16"} id={"TimerSettingsMenu"}>
+                    <div className={"w-2/3 sm:w-5/6"}>
                         <div>
                             <h2 className={"text-3xl font-bold"}>Timer</h2>
                         </div>
@@ -197,7 +197,7 @@ export function SettingsMenu() {
 
                     <hr className={"border-b-gray-600 border-b-2 border-0 rounded-full w-3/4 mt-4 mb-4"}/>
 
-                    <div className={"w-2/3"}>
+                    <div className={"w-2/3 sm:w-5/6"}>
                         <div>
                             <h2 className={"text-2xl font-bold mt-2"}>Time Settings</h2>
                         </div>

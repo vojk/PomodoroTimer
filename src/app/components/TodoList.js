@@ -14,7 +14,7 @@ export function TodoListAdd(props) {
 
     const handleAddButtonClick = () => {
         console.log(todoList.includes(taskName))
-        if (!todoList.includes(taskName) && taskName !== ""){
+        if (!todoList.includes(taskName) && taskName !== "") {
             todoList.push(taskName)
             props.handleAddTask(taskName);
             setTaskName("");
@@ -22,13 +22,13 @@ export function TodoListAdd(props) {
         }
     };
 
-    function removeSelf(){
+    function removeSelf() {
         $('#add_things_to_Todo').remove()
     }
 
 
     return (
-        <div className={"flex gap-2"} id={"add_things_to_Todo"}>
+        <div className={"flex gap-2 flex-wrap sm:justify-center"} id={"add_things_to_Todo"}>
             <input type="text" name={"todo_item_add"} id={"todo_item_add"}
                    className={"outline-none bg-transparent text-white p-4 pt-1 pb-1 text-xl border-b-cyan-600 border-b focus:outline-none focus:border-b-cyan-400 transition-all"}
                    onChange={handleInputChange} onKeyDown={function (event) {
@@ -36,14 +36,18 @@ export function TodoListAdd(props) {
                     handleAddButtonClick()
                     console.log("Test")
                 }
-            }}
+            }} placeholder={"Insert your plan"}
             />
-            <button type={"button"} className={"text-white px-4 border rounded-md"} onClick={handleAddButtonClick}>
-                Add to TODO list
-            </button>
-            <button type={"button"} className={"text-white px-4 border rounded-md"} onClick={removeSelf}>
-                Hide
-            </button>
+            <div className={"flex gap-2 sm:justify-center"}>
+                <button type={"button"} className={"text-white px-4 py-2 border border-gray-900 rounded-md bg-gray-900"}
+                        onClick={handleAddButtonClick}>
+                    Add to TODO list
+                </button>
+                <button type={"button"} className={"text-white px-4 py-2 border rounded-md"} onClick={removeSelf}>
+                    Close
+                </button>
+            </div>
+
         </div>
     )
 }
