@@ -137,6 +137,7 @@ export function StartTimer() {
 export function StopTimer() {
     if (TimerIsRunning) {
         clearInterval(timerInterval);
+        timerIsPaused = true
         TimerIsRunning = !TimerIsRunning;
         toggleButtonToControlTimer()
     }

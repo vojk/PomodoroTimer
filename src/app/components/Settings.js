@@ -4,13 +4,14 @@ import {useState} from "react";
 import SwitchSettings from "./SwitchSettings";
 import {blockInvalidChar, values} from "../func/values";
 import $ from 'jquery'
-import {setDuration, setTime} from "../func/TimerHandler";
+import {setDuration, setTime, StopTimer} from "../func/TimerHandler";
 import HelpIco from "../svg/help-circle.svg"
 
 function saveSettings() {
     window.localStorage.setItem("values", JSON.stringify(values))
     setDuration()
     setTime(document.getElementById("Timer_Viewer"))
+    values.HasTimerBeenRunning = false
 }
 
 export function SettingsButton() {
@@ -92,6 +93,7 @@ export function SettingsMenu() {
             }
             setWorkTime(event.target.value)
             values.duration_work = event.target.value
+            StopTimer()
             saveSettings()
         }
     }
@@ -109,6 +111,7 @@ export function SettingsMenu() {
             }
             setShortBrakeTime(event.target.value)
             values.duration_short_brake = event.target.value
+            StopTimer()
             saveSettings()
         }
     }
@@ -126,6 +129,7 @@ export function SettingsMenu() {
             }
             setLongBrakeTime(event.target.value)
             values.duration_long_brake = event.target.value
+            StopTimer()
             saveSettings()
         }
     }

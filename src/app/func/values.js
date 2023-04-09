@@ -9,10 +9,11 @@ export const values = {
 //window.localStorage.setItem("values", JSON.stringify(values)) pro uložení
 //JSON.parse(window.localStorage.getItem("values")) //pro načtení
 
+console.log(JSON.parse(window.localStorage.getItem("values")))
 
-if (JSON.parse(window.localStorage.getItem("values")) !== "") {
+if (JSON.parse(window.localStorage.getItem("values")) !== null) {
     JSON.parse(window.localStorage.getItem("values"), (key, value) => {
-        if (value.toString() !== "[object Object]") {
+        if (value.toString() !== "[object Object]" && key !== "HasTimerBeenRunning") {
             console.log(key + ": " + value)
             values[key] = value
         }
