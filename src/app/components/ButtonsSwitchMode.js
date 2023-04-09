@@ -22,6 +22,7 @@ function ButtonsSwitchMode(props) {
                     StopTimer()
                     values.type_of_timer = props.type
                     console.log(values.type_of_timer)
+                    values.HasTimerBeenRunning = false
                     setDuration()
                     setTime(document.getElementById("Timer_Viewer"))
                 } else {

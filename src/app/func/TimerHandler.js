@@ -97,7 +97,7 @@ export function StartTimer() {
         TimerIsRunning = true;
         timerInterval = setInterval(function () {
             setTime(timerDisplay)
-
+// eslint-disable-next-line
             if (minutes == 5 && seconds == 0 && values.type_of_timer === "work") {
                 playAudio_FiveMinutes()
             }
@@ -137,6 +137,7 @@ export function StartTimer() {
 export function StopTimer() {
     if (TimerIsRunning) {
         clearInterval(timerInterval);
+        timerIsPaused = true
         TimerIsRunning = !TimerIsRunning;
         toggleButtonToControlTimer()
     }

@@ -1,5 +1,4 @@
 import {Switch} from "@headlessui/react";
-import {useState} from "react";
 
 export default function SwitchSettings({id, checked, onChange}) {
     return (
