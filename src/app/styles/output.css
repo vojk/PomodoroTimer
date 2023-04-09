@@ -946,6 +946,11 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-cyan-950 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(8 51 68 / var(--tw-bg-opacity));
+}
+
 .bg-day-background {
   background-image: url('./../svg/backgrounds/day_time_lofi-min.png');
 }

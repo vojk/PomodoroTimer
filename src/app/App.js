@@ -15,7 +15,7 @@ function App() {
 
 
     return (
-        <div className={"bg-day-background bg-cover bg-center bg-no-repeat"} id={"main_container_of_app"}>
+        <div className={"bg-day-background bg-cover bg-center bg-no-repeat bg-cyan-950"} id={"main_container_of_app"}>
             <div className={"absolute top-4 left-4"}>
                 <SettingsButton/>
             </div>
