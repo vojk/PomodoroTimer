@@ -81,7 +81,7 @@ export function SettingsMenu() {
 
     const handleChangeWorkTime = (event) => {
         const element = $("#workTime_error")
-        if (event.target.value === 0 || event.target.value === "") {
+        if (event.target.value === "0" || event.target.value === "") {
             setWorkTime(event.target.value)
             if (element.hasClass("hidden")) {
                 element.removeClass("hidden")
@@ -98,7 +98,7 @@ export function SettingsMenu() {
 
     const handleChangeShortBrakeTime = (event) => {
         const element = $("#shortBrakeTime_error")
-        if (event.target.value === 0 || event.target.value === "") {
+        if (event.target.value === "0" || event.target.value === "") {
             setShortBrakeTime(event.target.value)
             if (element.hasClass("hidden")) {
                 element.removeClass("hidden")
@@ -115,7 +115,7 @@ export function SettingsMenu() {
 
     const handleChangeLongBrakeTime = (event) => {
         const element = $("#longBrakeTime_error")
-        if (event.target.value === 0 || event.target.value === "") {
+        if (event.target.value === "0" || event.target.value === "") {
             setLongBrakeTime(event.target.value)
             if (element.hasClass("hidden")) {
                 element.removeClass("hidden")
