@@ -262,7 +262,7 @@ export function SettingsMenu() {
                         </div>
                     </div>
                     <div className={"absolute bottom-7"}>
-                            <span className={"text-xl px-7 py-2 border-2 rounded-lg text-white cursor-pointer"}
+                            <span className={"text-xl px-7 py-2 border-2 rounded-lg text-white cursor-pointer hover:text-black hover:bg-white transition-all"}
                                   onClick={closeAndSave}>
                                 Save
                             </span>
