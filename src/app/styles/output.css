@@ -745,6 +745,22 @@ video {
   width: 100vw;
 }
 
+.w-\[50\%\] {
+  width: 50%;
+}
+
+.w-6 {
+  width: 1.5rem;
+}
+
+.w-10 {
+  width: 2.5rem;
+}
+
+.w-\[24px\] {
+  width: 24px;
+}
+
 .min-w-\[42rem\] {
   min-width: 42rem;
 }
@@ -1279,6 +1295,26 @@ video {
   }
 
   .sm\:w-full {
+    width: 100%;
+  }
+
+  .sm\:w-4\/5 {
+    width: 80%;
+  }
+
+  .sm\:w-\[90\%\] {
+    width: 90%;
+  }
+
+  .sm\:w-\[95\%\] {
+    width: 95%;
+  }
+
+  .sm\:w-\[98\%\] {
+    width: 98%;
+  }
+
+  .sm\:w-\[100\%\] {
     width: 100%;
   }
 

@@ -56,7 +56,7 @@ function HelperWithSettings({helpText, id}) {
 
     return (
         <div className={"rounded-full w-5 relative"}>
-            <img src={HelpIco} alt="" className={"w-5 stroke-gray-800"} onMouseOver={showHelpText}
+            <img src={HelpIco} alt="" className={"w-5 stroke-gray-800 sm:hidden"} onMouseOver={showHelpText}
                  onMouseLeave={hideHelpText}/>
             <div
                 className={"absolute w-64 text-sm text-justify p-3 rounded-md bg-neutral-800 opacity-0 transition-all hidden select-none z-30"}
@@ -209,7 +209,7 @@ export function SettingsMenu() {
                         <h2 className={"text-3xl font-bold mb-2"}>Timer</h2>
                     </div>
 
-                    <div className={"w-3/4 sm:w-5/6 flex flex-col overflow-scroll px-4 snap-x"}>
+                    <div className={"w-3/4 sm:w-full flex flex-col overflow-scroll px-4 snap-x"}>
                         <div>
                             <div>
                                 <div>
