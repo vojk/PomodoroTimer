@@ -9,7 +9,7 @@ function Timer() {
     BackgroundManager()
     return (
         <div className={"text-center"}>
-            <span id={"Timer_Viewer"} className={"text-white text-8xl font-bold italic text-center select-none"}>
+            <span id={"Timer_Viewer"} className={"text-white text-8xl sm:text-[5.5rem] font-bold italic text-center select-none transition-all"}>
                 {initTimer()}
             </span>
             <div className={"flex justify-center gap-16"}>

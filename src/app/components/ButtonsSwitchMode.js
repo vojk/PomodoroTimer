@@ -32,8 +32,8 @@ function ButtonsSwitchMode(props) {
                 }
 
             }}
-                  className={"p-8 pb-1 pt-1 border rounded-full flex items-center justify-center w-fit h-full cursor-pointer select-none text-lg italic font-light SwitchButtons text-white hover:text-black hover:bg-white transition-all " + (props.isActive ? "active" : "")}>
-                        <span className={"text-center "+ (props.isActive ? "active" : "")}>
+                  className={"p-8 pb-1 pt-1 border rounded-full flex items-center justify-center w-fit h-full cursor-pointer select-none text-lg italic font-light SwitchButtons text-white sm:px-6 hover:text-black hover:bg-white transition-all " + (props.isActive ? "active" : "")}>
+                        <span className={"text-center sm:whitespace-nowrap "+ (props.isActive ? "active" : "")}>
                              {props.text}
                         </span>
             </span>

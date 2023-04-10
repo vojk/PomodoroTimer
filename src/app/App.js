@@ -26,7 +26,7 @@ function App() {
                 <SettingsMenu/>
             </div>
             <div
-                className={"bg-gradient-to-br from-cyan-900 via-cyan-800/50 via-65% to-cyan-600/80 w-screen h-screen flex justify-center items-center"}>
+                className={"bg-gradient-to-br from-cyan-900 via-cyan-800/50 via-65% to-cyan-600/80 w-screen h-screen flex justify-center items-center sm:px-4"}>
                 <div>
                     <div className={"mb-4 flex justify-between gap-2"}>
                         <ButtonsSwitchMode text={"Work"} type={"work"} isActive={true}></ButtonsSwitchMode>
@@ -37,8 +37,8 @@ function App() {
                 </div>
             </div>
 
-            <div className={"absolute bottom-4 left-4 flex flex-col gap-2 sm:left-0"}>
-                <div id={"Todo_List_overview"} className={"flex flex-col gap-2"}>
+            <div className={"absolute bottom-4 left-4 right-4 flex flex-col gap-2 transition-all"}>
+                <div id={"Todo_List_overview"} className={"flex flex-col gap-2 sm:ml-4"}>
                     {todoList.map((item) => {
                             return (
                                 <TodoListItem NameOfTask={item["NameOfTask"]} IdOfTask={TodoList.indexOf(item["NameOfTask"])}></TodoListItem>
