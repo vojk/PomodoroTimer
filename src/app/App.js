@@ -5,6 +5,7 @@ import ButtonsSwitchMode from "./components/ButtonsSwitchMode";
 import {TodoListItem, TodoListAdd} from "./components/TodoList";
 import {useState} from "react";
 import {SettingsButton, SettingsMenu} from "./components/Settings";
+import {TodoList} from "./func/values";
 
 function App() {
     const [todoList, setTodoList] = useState([]);
@@ -40,7 +41,7 @@ function App() {
                 <div id={"Todo_List_overview"} className={"flex flex-col gap-2"}>
                     {todoList.map((item) => {
                             return (
-                                <TodoListItem NameOfTask={item["NameOfTask"]}></TodoListItem>
+                                <TodoListItem NameOfTask={item["NameOfTask"]} IdOfTask={TodoList.indexOf(item["NameOfTask"])}></TodoListItem>
                             )
                         }
                     )}

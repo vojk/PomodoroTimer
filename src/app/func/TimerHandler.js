@@ -86,9 +86,9 @@ export function StartTimer() {
 
     timerIsPaused = false;
 
-    if (!values.HasTimerBeenRunning) {
+    if (!values.has_timer_been_running) {
         toggleButtonToControlTimer()
-        values.HasTimerBeenRunning = true
+        values.has_timer_been_running = true
         setDuration()
     }
 
@@ -103,20 +103,46 @@ export function StartTimer() {
             }
 
             if (--durationInSeconds < 0) {
+                console.log(values.number_of_work)
                 clearInterval(timerInterval);
                 TimerIsRunning = !TimerIsRunning;
-                if (values.setTimerAfterEndToNext && values.type_of_timer === "work") {
-                    values.type_of_timer = "short_brake"
-                    switchTimersButtons("short_brake")
-                    setDuration()
-                    setTime(timerDisplay)
-                    StartTimer()
-                } else if (values.setTimerAfterEndToNext && values.type_of_timer === "short_brake") {
+                if (values.set_timer_after_end_to_next && values.type_of_timer === "work") {
+                    if (values.use_classic_pomodoro_mod) {
+                        if (values.number_of_work < values.number_of_work_before_long_brake) {
+                            values.type_of_timer = "short_brake"
+                            switchTimersButtons("short_brake")
+                            setDuration()
+                            setTime(timerDisplay)
+                            StartTimer()
+                            values.number_of_work++
+                        } else if (values.number_of_work == values.number_of_work_before_long_brake) {
+                            values.type_of_timer = "long_brake"
+                            switchTimersButtons("long_brake")
+                            setDuration()
+                            setTime(timerDisplay)
+                            StartTimer()
+                            values.number_of_work = 0
+                        }
+                    } else {
+                        values.type_of_timer = "short_brake"
+                        switchTimersButtons("short_brake")
+                        setDuration()
+                        setTime(timerDisplay)
+                        StartTimer()
+                    }
+                } else if (values.set_timer_after_end_to_next && values.type_of_timer === "short_brake") {
                     values.type_of_timer = "work"
                     switchTimersButtons("work")
                     setDuration()
                     setTime(timerDisplay)
                     StartTimer()
+                } else if (values.set_timer_after_end_to_next && values.type_of_timer === "long_brake") {
+                    values.type_of_timer = "work"
+                    switchTimersButtons("work")
+                    setDuration()
+                    setTime(timerDisplay)
+                    StartTimer()
+                    values.number_of_work = 0
                 } else {
                     setDuration()
                     setTime(timerDisplay)

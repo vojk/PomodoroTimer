@@ -1,28 +1,35 @@
 export const values = {
-    duration_work: 60,
-    duration_short_brake: 10,
+    duration_work: 25,
+    duration_short_brake: 5,
     duration_long_brake: 20,
-    HasTimerBeenRunning: false,
+    number_of_work: 0,
+    number_of_work_before_long_brake: 4,
     type_of_timer: "work",
-    setTimerAfterEndToNext: true
+    has_timer_been_running: false,
+    set_timer_after_end_to_next: true,
+    use_classic_pomodoro_mod: true
 }
-//window.localStorage.setItem("values", JSON.stringify(values)) pro uložení
+//window.localStorage.setItem("values", JSON.stringify(values)) //pro uložení
 //JSON.parse(window.localStorage.getItem("values")) //pro načtení
 
-console.log(JSON.parse(window.localStorage.getItem("values")))
+const values_to_ignore_while_loading = ["has_timer_been_running", "type_of_timer", "number_of_work"]
 
-if (JSON.parse(window.localStorage.getItem("values")) !== null) {
-    JSON.parse(window.localStorage.getItem("values"), (key, value) => {
-        if (value.toString() !== "[object Object]" && key !== "HasTimerBeenRunning" && key !== "type_of_timer") {
-            console.log(key + ": " + value)
-            values[key] = value
-        }
-    })
+if (JSON.parse(window.localStorage.getItem("values")) !== null) { //pro načtení
+    try {
+        JSON.parse(window.localStorage.getItem("values"), (key, value) => {
+            if (value.toString() !== "[object Object]" && !values_to_ignore_while_loading.includes(key)) {
+                console.info(key + ": " + value)
+                values[key] = value
+            }
+        })
+    } catch (e) {
+        console.error(e)
+    } finally {
+        console.info("Loading is done")
+    }
 }
 
-
-export let todoList = []
-
+export let TodoList = []
 
 export const blockInvalidChar = e => {
     const regex = /[0-9]/;

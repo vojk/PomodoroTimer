@@ -3,7 +3,7 @@ import $ from 'jquery'
 
 import tickedUpSound from './../audio/click-21156.mp3'
 import {useState} from "react";
-import {todoList} from "../func/values";
+import {TodoList} from "../func/values";
 
 export function TodoListAdd(props) {
     const [taskName, setTaskName] = useState("");
@@ -13,9 +13,9 @@ export function TodoListAdd(props) {
     };
 
     const handleAddButtonClick = () => {
-        console.log(todoList.includes(taskName))
-        if (!todoList.includes(taskName) && taskName !== "") {
-            todoList.push(taskName)
+        console.log(TodoList.includes(taskName))
+        if (!TodoList.includes(taskName) && taskName !== "") {
+            TodoList.push(taskName)
             props.handleAddTask(taskName);
             setTaskName("");
             $('#todo_item_add').val("")
@@ -52,13 +52,13 @@ export function TodoListAdd(props) {
     )
 }
 
-export function TodoListItem({NameOfTask}) {
+export function TodoListItem({NameOfTask, IdOfTask}) {
     console.log(NameOfTask)
     const taskName = NameOfTask.toString()
     return (
         <div>
             <div className={"flex items-center gap-3 select-none"} onClick={function () {
-                let selector = $('#' + taskName.normalize("NFD").replace(/\p{Diacritic}/gu, "").replace(/\s/g, '') + "_tick")
+                let selector = $('#' + IdOfTask + "_tick")
                 if (selector.hasClass("hidden")) {
                     selector.removeClass("hidden")
                     new Audio(tickedUpSound).play()
@@ -69,7 +69,7 @@ export function TodoListItem({NameOfTask}) {
             }}>
                 <div className={"border-2 border-cyan-700 w-8 h-8 rounded-sm relative"}>
                     <img src={Tick}
-                         id={taskName.normalize("NFD").replace(/\p{Diacritic}/gu, "").replace(/\s/g, '') + "_tick"}
+                         id={IdOfTask + "_tick"}
                          alt=""
                          className={"w-24 absolute z-10 scale-125 bottom-1 left-1 hidden"}/>
                 < /div>

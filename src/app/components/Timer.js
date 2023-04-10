@@ -1,7 +1,7 @@
 import PlayIcon from './../svg/play.svg'
 import PauseIcon from './../svg/pause.svg'
 import RestartIcon from './../svg/refresh-cw.svg'
-import {StartTimer, setTime, setDuration, initTimer} from "../func/TimerHandler";
+import {StartTimer, setTime, setDuration, initTimer, StopTimer} from "../func/TimerHandler";
 import {values} from "../func/values";
 import {BackgroundManager} from "../func/BackgroundManager";
 
@@ -21,12 +21,10 @@ function Timer() {
                 </div>
                 <div>
                     <img src={RestartIcon} alt="" onClick={function () {
-                        if (values.HasTimerBeenRunning === true) {
-                            setDuration()
-                            StartTimer()
-                            setTime(document.getElementById("Timer_Viewer"))
-                            values.HasTimerBeenRunning = false
-                        }
+                        setDuration()
+                        StopTimer()
+                        setTime(document.getElementById("Timer_Viewer"))
+                        values.has_timer_been_running = true
                     }} className={"flex cursor-pointer"}/>
                 </div>
             </div>
