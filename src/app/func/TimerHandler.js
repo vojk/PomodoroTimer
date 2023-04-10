@@ -114,7 +114,7 @@ export function StartTimer() {
                             setDuration()
                             setTime(timerDisplay)
                             StartTimer()
-                            values.number_of_work++
+                            values.number_of_work++ // eslint-disable-next-line
                         } else if (values.number_of_work == values.number_of_work_before_long_brake) {
                             values.type_of_timer = "long_brake"
                             switchTimersButtons("long_brake")
