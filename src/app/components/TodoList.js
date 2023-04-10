@@ -14,7 +14,7 @@ export function TodoListAdd(props) {
 
     const handleAddButtonClick = () => {
         console.log(TodoList.includes(taskName))
-        if (/*!TodoList.includes(taskName) && */taskName !== "") {
+        if (!TodoList.includes(taskName) && taskName !== "") {
             TodoList.push(taskName)
             props.handleAddTask(taskName);
             setTaskName("");
