@@ -7,12 +7,14 @@ export const values = {
     type_of_timer: "work",
     has_timer_been_running: false,
     set_timer_after_end_to_next: true,
-    use_classic_pomodoro_mod: true
+    use_classic_pomodoro_mod: true,
+    edit_mode_enabled: true,
+    actual_settings_window: "Timer"
 }
 //window.localStorage.setItem("values", JSON.stringify(values)) //pro uložení
 //JSON.parse(window.localStorage.getItem("values")) //pro načtení
 
-const values_to_ignore_while_loading = ["has_timer_been_running", "type_of_timer", "number_of_work"]
+const values_to_ignore_while_loading = ["has_timer_been_running", "type_of_timer", "number_of_work", "edit_mode_enable", "actual_settings_window"]
 
 if (JSON.parse(window.localStorage.getItem("values")) !== null) { //pro načtení
     try {
@@ -29,7 +31,7 @@ if (JSON.parse(window.localStorage.getItem("values")) !== null) { //pro načten�
     }
 }
 
-export let TodoList = []
+export var TodoList = []
 
 export const blockInvalidChar = e => {
     const regex = /[0-9]/;

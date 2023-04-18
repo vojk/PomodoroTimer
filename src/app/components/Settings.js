@@ -1,13 +1,17 @@
 import SettingsIco from './../svg/settings.svg'
 import Close from './../svg/x.svg'
 import {useState} from "react";
-import SwitchSettings from "./SwitchSettings";
-import {blockInvalidChar, values} from "../func/values";
+import {blockInvalidChar, TodoList, values} from "../func/values";
 import $ from 'jquery'
 import {setDuration, setTime, StopTimer} from "../func/TimerHandler";
 import HelpIco from "../svg/help-circle.svg"
+import {SettingsTimer} from "./settings/SettingsTimer";
+import {ReactComponent as DeleteIco} from './../svg/x.svg';
+import {ReactComponent as Up} from './../svg/chevron-up.svg';
+import {ReactComponent as Down} from './../svg/chevron-down.svg';
+import {TodoListAdd} from "./TodoList";
 
-function saveSettings() {
+export function saveSettings() {
     StopTimer()
     window.localStorage.setItem("values", JSON.stringify(values))
     setDuration()
@@ -38,7 +42,7 @@ function closeAndSave() {
 
 //w-4 h-4 rounded-full border-gray-700 border-2
 
-function HelperWithSettings({helpText, id}) {
+export function HelperWithSettings({helpText, id}) {
     const showHelpText = () => {
         $("#" + id).removeClass("hidden")
         setTimeout(function () {
@@ -67,118 +71,14 @@ function HelperWithSettings({helpText, id}) {
     )
 }
 
-const DivideLine = () => {
+export const DivideLine = () => {
     return (
         <hr className={"border-b-gray-600 border-b-2 border-0 rounded-full w-4/5 mt-4 mb-4 self-center"}/>
     )
 }
 
-export function SettingsMenu() {
-    const [continueAfterTimer, setContinueAfterTimer] = useState(values.set_timer_after_end_to_next);
-    const [useClassicPomodoroMod, setUseClassicPomodoroMod] = useState(values.use_classic_pomodoro_mod);
-
-    const [workTime, setWorkTime] = useState(values.duration_work)
-    const [shortBrakeTime, setShortBrakeTime] = useState(values.duration_short_brake)
-    const [longBrakeTime, setLongBrakeTime] = useState(values.duration_long_brake)
-
-    const [modOfPomodoro, setModOfPomodoro] = useState(values.number_of_work_before_long_brake)
-
-    function handleContinueAfterTimerChange(newValue) {
-        setContinueAfterTimer(newValue);
-        values.set_timer_after_end_to_next = newValue
-        saveSettings()
-    }
-
-    function handleUseClassicPomodoroMod(newValue) {
-        setUseClassicPomodoroMod(newValue);
-        values.use_classic_pomodoro_mod = newValue
-        saveSettings()
-    }
-
-    function handleModOfPomodoro(event) {
-        const newValue = event.target.value;
-        setModOfPomodoro(newValue);
-        values.number_of_work_before_long_brake = +newValue
-        saveSettings();
-        //setModOfPomodoro(newValue);
-        //values.number_of_work_before_long_brake = newValue
-        //saveSettings()
-    }
-
-    const handleChangeWorkTime = (event) => {
-        const element = $("#workTime_error")
-        if (event.target.value === "0" || event.target.value === "") {
-            setWorkTime(event.target.value)
-            if (element.hasClass("hidden")) {
-                element.removeClass("hidden")
-            }
-        } else {
-            if (!element.hasClass("hidden")) {
-                element.addClass("hidden")
-            }
-            setWorkTime(event.target.value)
-            values.duration_work = event.target.value
-            StopTimer()
-            saveSettings()
-        }
-    }
-
-    const handleChangeShortBrakeTime = (event) => {
-        const element = $("#shortBrakeTime_error")
-        if (event.target.value === "0" || event.target.value === "") {
-            setShortBrakeTime(event.target.value)
-            if (element.hasClass("hidden")) {
-                element.removeClass("hidden")
-            }
-        } else {
-            if (!element.hasClass("hidden")) {
-                element.addClass("hidden")
-            }
-            setShortBrakeTime(event.target.value)
-            values.duration_short_brake = event.target.value
-            StopTimer()
-            saveSettings()
-        }
-    }
-
-    const handleChangeLongBrakeTime = (event) => {
-        const element = $("#longBrakeTime_error")
-        if (event.target.value === "0" || event.target.value === "") {
-            setLongBrakeTime(event.target.value)
-            if (element.hasClass("hidden")) {
-                element.removeClass("hidden")
-            }
-        } else {
-            if (!element.hasClass("hidden")) {
-                element.addClass("hidden")
-            }
-            setLongBrakeTime(event.target.value)
-            values.duration_long_brake = event.target.value
-            StopTimer()
-            saveSettings()
-        }
-    }
-
-    const setWorkTimeOnLostFocus = (event) => {
-        setWorkTime(values.duration_work)
-        if (!$("#workTime_error").hasClass("hidden")) {
-            $("#workTime_error").addClass("hidden")
-        }
-    }
-
-    const setShortBrakeTimeOnLostFocus = (event) => {
-        setShortBrakeTime(values.duration_short_brake)
-        if (!$("#shortBrakeTime_error").hasClass("hidden")) {
-            $("#shortBrakeTime_error").addClass("hidden")
-        }
-    }
-
-    const setLongBrakeTimeOnLostFocus = (event) => {
-        setLongBrakeTime(values.duration_long_brake)
-        if (!$("#longBrakeTime_error").hasClass("hidden")) {
-            $("#longBrakeTime_error").addClass("hidden")
-        }
-    }
+export function SettingsMenu({deleteTask, editTask, changeOrder, todoListlist, handleAddTask}) {
+    const [activeTab, tabActive] = useState(2)
 
     return (
         <div
@@ -191,143 +91,83 @@ export function SettingsMenu() {
             <div className={"flex flex-1 sm:flex-col overflow-hidden"}>
                 <div className={"border-r border-r-gray-800 p-12 pt-10 sm:border-none sm:py-8"}>
                     <ul className={"flex flex-col gap-4 text-xl select-none sm:flex-row sm:justify-between"}>
-                        <li className={"cursor-pointer line-through text-gray-700"}>
+                        <li className={"line-through text-gray-700"} onClick={() => tabActive(1)}>
                             General
                         </li>
-                        <li className={"cursor-pointer"}>
+                        <li className={(activeTab === 2 ? "text-white" : "text-gray-700") + " cursor-pointer hover:text-white transition-all"}
+                            onClick={() => tabActive(2)}>
                             Timer
                         </li>
-                        <li className={"cursor-pointer line-through text-gray-700"}>
+                        <li className={" line-through text-gray-700"} onClick={() => tabActive(3)}>
                             Sound
+                        </li>
+                        <li className={(activeTab === 4 ? "text-white" : "text-gray-700") + " cursor-pointer hover:text-white transition-all"}
+                            onClick={() => tabActive(4)}>
+                            Todo
                         </li>
                     </ul>
                 </div>
 
-                <div className={"p-8 w-full flex flex-col items-center sm:min-h-1/2 sm:h-2/3 sm:py-2 h-16 h-[90%]"}
+                <div className={"p-8 w-full flex flex-col items-center  sm:min-h-1/2 sm:h-2/3 sm:py-2 h-16 h-[90%]"}
                      id={"TimerSettingsMenu"}>
                     <div>
-                        <h2 className={"text-3xl font-bold mb-2"}>Timer</h2>
+                        <h2 className={"text-3xl font-bold mb-2"} id={"settingsHeader"}>
+                            {activeTab === 2 ? "Timer" : activeTab === 4 ? "Todo" : ""}
+                        </h2>
                     </div>
 
-                    <div className={"w-3/4 sm:w-full flex flex-col overflow-scroll px-4 snap-x"}>
+                    <div
+                        className={"w-3/4 sm:w-full flex-col overflow-scroll overflow-x-hidden px-4 snap-x " + (activeTab === 2 ? "flex" : "hidden")}
+                        id={"timerSettings"}>
+                        <SettingsTimer/>
+                    </div>
+
+
+                    <div
+                        className={"w-3/4 sm:w-full h-full flex flex-col overflow-scroll overflow-x-hidden px-4 snap-x settingsWindow " + (activeTab === 4 ? "flex" : "hidden")}
+                        id={"todoSettings"}>
                         <div>
                             <div>
                                 <div>
-                                    <h2 className={"text-2xl font-bold mt-2"}>Basic</h2>
+                                    <h2 className={"text-2xl font-bold mt-2"}>Edit</h2>
                                 </div>
-                                <div className={"flex gap-8  items-center justify-between"}>
-                                    <h3 className={"text-xl flex items-center gap-2"}>After end continue to next timer
-                                        <HelperWithSettings
-                                            helpText={"After the end of timer switch to next timer. In default Work -> Short (4x) -> Long -> ..."}
-                                            id={"endContinueHelper"}/>
-                                    </h3>
-                                    <SwitchSettings id={"ContinueAfterTimer"} checked={continueAfterTimer}
-                                                    onChange={(value) => handleContinueAfterTimerChange(value)}/>
-                                </div>
-                            </div>
-                        </div>
+                                <div className={"flex flex-col gap-2"}>
+                                    {todoListlist.map((item) => {
+                                        return (
+                                            <div className={"flex items-center justify-between"}>
+                                                <div className={"flex items-center gap-2"}>
+                                                    <span onClick={() => deleteTask(item, todoListlist.indexOf(item))}
+                                                          className={"cursor-pointer"}>
+                                                        <DeleteIco/>
+                                                    </span>
+                                                    <input type="text" name="todolistsomething"
+                                                           id={todoListlist.indexOf(item) + "_list"}
+                                                           value={item["NameOfTask"]}
+                                                           className={"outline-none bg-transparent text-white p-4 pt-1 pb-1 text-xl border-b-cyan-600 border-b w-80 focus:outline-none focus:border-b-cyan-400 transition-all"}
+                                                           onChange={(event) => editTask(event.target.value, TodoList.indexOf(item["NameOfTask"]))}
+                                                           maxLength={32}/>
+                                                </div>
+                                                <div className={"flex gap-1"}>
 
-                        <DivideLine/>
-
-                        <div>
-                            <div>
-                                <h2 className={"text-2xl font-bold mt-2"}>Time Settings</h2>
-                            </div>
-                            <div className={"mt-2"}>
-                                <div className={"flex gap-8 items-center justify-between"}>
-                                    <h3 className={"text-xl flex items-center gap-2"}>Work Time
-                                        <HelperWithSettings
-                                            helpText={"This change time of your main Pomodoro Timer, known as Work time timer. Value is in minutes. Default: 60"}
-                                            id={"workTimeHelper"}/>
-                                    </h3>
-                                    <div className={"relative"}>
-                                        <input id={"Work_Text_Field"} type={"number"}
-                                               className={"outline-none bg-transparent text-white p-4 pt-1 pb-1 text-xl border-b-cyan-600 border-b w-24 focus:outline-none focus:border-b-cyan-400 transition-all"}
-                                               min={1} onKeyDown={blockInvalidChar} onChange={handleChangeWorkTime}
-                                               onBlur={setWorkTimeOnLostFocus}
-                                               value={workTime}/>
-                                        <p className={"absolute text-red-500 mt-0.5 hidden"}
-                                           id={"workTime_error"}>Invalid
-                                            input!</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={"mt-4"}>
-                                <div className={"flex gap-8 items-center justify-between"}>
-                                    <h3 className={"text-xl flex items-center gap-2"}>
-                                        Short Brake
-                                        <HelperWithSettings
-                                            helpText={"This change time of your short brake, known as reset brake or small chill. Value is in minutes. Default: 10"}
-                                            id={"shortBrakeTimeHelper"}/>
-                                    </h3>
-                                    <div className={"relative"}>
-                                        <input id={"Work_Text_Field"} type={"number"}
-                                               className={"outline-none bg-transparent text-white p-4 pt-1 pb-1 text-xl border-b-cyan-600 border-b w-24 focus:outline-none focus:border-b-cyan-400 transition-all"}
-                                               min={1} onKeyDown={blockInvalidChar}
-                                               onChange={handleChangeShortBrakeTime}
-                                               onBlur={setShortBrakeTimeOnLostFocus}
-                                               value={shortBrakeTime}/>
-                                        <p className={"absolute text-red-500 mt-0.5 hidden"}
-                                           id={"shortBrakeTime_error"}>Invalid
-                                            input!</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={"mt-4"}>
-                                <div className={"flex gap-8 items-center justify-between"}>
-                                    <h3 className={"text-xl flex items-center gap-2"}>
-                                        Long Brake
-                                        <HelperWithSettings
-                                            helpText={"This change time of your long brake, known as snack or launch brake. Value is in minutes. Default: 20"}
-                                            id={"longBrakeTimeHelper"}/>
-                                    </h3>
-                                    <div className={"relative"}>
-                                        <input id={"Work_Text_Field"} type={"number"}
-                                               className={"outline-none bg-transparent text-white p-4 pt-1 pb-1 text-xl border-b-cyan-600 border-b w-24 focus:outline-none focus:border-b-cyan-400 transition-all"}
-                                               min={1} onKeyDown={blockInvalidChar} onChange={handleChangeLongBrakeTime}
-                                               onBlur={setLongBrakeTimeOnLostFocus}
-                                               value={longBrakeTime}/>
-                                        <p className={"absolute text-red-500 mt-0.5 hidden"}
-                                           id={"longBrakeTime_error"}>Invalid
-                                            input!</p>
-                                    </div>
-
+                                                    <span
+                                                        onClick={() => changeOrder(todoListlist.indexOf(item), todoListlist.indexOf(item) - 1)}
+                                                        className={"cursor-pointer"}>
+                                                        <Up/>
+                                                    </span>
+                                                    <span
+                                                        onClick={() => changeOrder(todoListlist.indexOf(item), todoListlist.indexOf(item) + 1)}
+                                                        className={"cursor-pointer"}>
+                                                        <Down/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
                                 </div>
                             </div>
                         </div>
-
-                        <DivideLine/>
-
-                        <div>
-                            <div>
-                                <h2 className={"text-2xl font-bold mt-2"}>Pomodoro Mods</h2>
-                            </div>
-                            <div className={"flex gap-8  items-center justify-between my-4"}>
-                                <h3 className={"text-xl flex items-center gap-2"}>Use classic mod
-                                    <HelperWithSettings
-                                        helpText={"Classic mod is for example like that: Work -> Short (4x) -> Long -> ..."}
-                                        id={"classicModHelper"}/>
-                                </h3>
-                                <SwitchSettings id={"useClassicPomodoroMod"} checked={useClassicPomodoroMod}
-                                                onChange={(value) => handleUseClassicPomodoroMod(value)}/>
-                            </div>
-
-                            <div className={"flex gap-8  items-center justify-between my-4 mb-12"}>
-                                <h3 className={"text-xl flex items-center gap-2"}>Select mod
-                                    <HelperWithSettings
-                                        helpText={"Here you can select how you want your mod be. 4/1 is 1 long brake on 4 work period"}
-                                        id={"selectMod"}/>
-                                </h3>
-                                <div>
-                                    <select id={"SelectMod"}
-                                            className={"outline-none bg-transparent text-white p-4 pt-1 pb-1 text-xl border-b-cyan-600 border-b w-24 focus:outline-none focus:border-b-cyan-400 transition-all"}
-                                            onChange={handleModOfPomodoro} value={modOfPomodoro}>
-                                        <option value="4">4/1</option>
-                                        <option value="5">5/1</option>
-                                        <option value="6">6/1</option>
-                                    </select>
-                                </div>
-                            </div>
+                        <div className={"flex justify-center"}>
+                            <TodoListAdd handleAddTask={handleAddTask} hideTodo={true} id={"todo_item_add_settings"}/>
                         </div>
 
                     </div>

@@ -11,9 +11,46 @@ function App() {
     const [todoList, setTodoList] = useState([]);
 
     const handleAddTask = (taskName) => {
-        setTodoList([...todoList, {NameOfTask: taskName}]);
+        if (TodoList.length <= 10){
+            setTodoList([...todoList, {NameOfTask: taskName}]);
+        }else {
+            console.error("You reach maximum of items")
+        }
+
     }
 
+    const handleRemoveTask = (taskName, index) => {
+        const updatedTodoList = [...todoList];
+        updatedTodoList.splice(index, 1);
+        TodoList.splice(TodoList.indexOf(taskName), 1)
+        setTodoList(updatedTodoList);
+    }
+
+    const handleChangeOrderTask = (oldIndex, newIndex) => {
+        if (!(newIndex >= TodoList.length) && !(newIndex < 0)){
+            const updatedTodoList = [...todoList];
+            const itemToMove = updatedTodoList[oldIndex];
+            updatedTodoList.splice(oldIndex, 1);
+            updatedTodoList.splice(newIndex, 0, itemToMove);
+            TodoList.splice(oldIndex, 1);
+            TodoList.splice(newIndex, 0, itemToMove["NameOfTask"]);
+            console.log(TodoList)
+            setTodoList(updatedTodoList);
+        }else {
+            if (newIndex >= TodoList.length){
+                console.error("New Index Is Bigger Or Equal Than Size Of List. \n Size Of List Is " + TodoList.length + " And Size Of New Index Is " + newIndex)
+            } else if (newIndex < 0){
+                console.error("New Index Is Smaller Than Size Of List. \n Size Of List Is " + TodoList.length + " And Size Of New Index Is " + newIndex)
+            }
+        }
+    }
+
+    const handleEditValue = (newValue, index) => {
+        const updatedTodoList = [...todoList]
+        updatedTodoList[index]["NameOfTask"] = newValue
+        TodoList[index] = newValue
+        setTodoList(updatedTodoList)
+    }
 
     return (
         <div className={"bg-day-background bg-cover bg-center bg-no-repeat bg-cyan-950"} id={"main_container_of_app"}>
@@ -23,7 +60,7 @@ function App() {
             <div
                 className={"absolute w-screen h-screen flex justify-center items-center bg-black/40 backdrop-blur-sm z-20 hidden"}
                 id={"main_container_of_settings"}>
-                <SettingsMenu/>
+                <SettingsMenu deleteTask={handleRemoveTask} editTask={handleEditValue} changeOrder={handleChangeOrderTask} todoListlist={todoList} handleAddTask={handleAddTask}/>
             </div>
             <div
                 className={"bg-gradient-to-br from-cyan-900 via-cyan-800/50 via-65% to-cyan-600/80 w-screen h-screen flex justify-center items-center sm:px-4"}>
@@ -41,12 +78,12 @@ function App() {
                 <div id={"Todo_List_overview"} className={"flex flex-col gap-2 sm:ml-4"}>
                     {todoList.map((item) => {
                             return (
-                                <TodoListItem NameOfTask={item["NameOfTask"]} IdOfTask={TodoList.indexOf(item["NameOfTask"])}></TodoListItem>
+                                <TodoListItem NameOfTask={item["NameOfTask"]} IdOfTask={TodoList.indexOf(item["NameOfTask"])} removeTask={handleRemoveTask} changeOrder={handleChangeOrderTask}></TodoListItem>
                             )
                         }
                     )}
                 </div>
-                <TodoListAdd handleAddTask={handleAddTask}></TodoListAdd>
+                <TodoListAdd handleAddTask={handleAddTask} id={"todo_item_add"}></TodoListAdd>
             </div>
         </div>
     );
