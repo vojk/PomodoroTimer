@@ -75,7 +75,7 @@ function App() {
             </div>
 
             <div className={"absolute bottom-4 left-4 right-4 flex flex-col gap-2 transition-all"}>
-                <div id={"Todo_List_overview"} className={"flex flex-col gap-2 sm:ml-4"}>
+                <div id={"Todo_List_overview"} className={"flex flex-col gap-2 sm:ml-4 overflow-y-scroll sm:max-h-[220px] sm:h-[100%]"}>
                     {todoList.map((item) => {
                             return (
                                 <TodoListItem NameOfTask={item["NameOfTask"]} IdOfTask={TodoList.indexOf(item["NameOfTask"])} removeTask={handleRemoveTask} changeOrder={handleChangeOrderTask}></TodoListItem>

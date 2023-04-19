@@ -124,17 +124,17 @@ export function SettingsMenu({deleteTask, editTask, changeOrder, todoListlist, h
 
 
                     <div
-                        className={"w-3/4 sm:w-full h-full flex flex-col overflow-scroll overflow-x-hidden px-4 snap-x settingsWindow " + (activeTab === 4 ? "flex" : "hidden")}
+                        className={"w-3/4 sm:w-full h-full flex flex-col px-4 overflow-x-hidden snap-x settingsWindow relative " + (activeTab === 4 ? "flex" : "hidden")}
                         id={"todoSettings"}>
                         <div>
+                            <h2 className={"text-2xl font-bold mt-2"}>List of tasks</h2>
+                        </div>
+                        <div className={"overflow-y-scroll h-full"}>
                             <div>
-                                <div>
-                                    <h2 className={"text-2xl font-bold mt-2"}>Edit</h2>
-                                </div>
                                 <div className={"flex flex-col gap-2"}>
                                     {todoListlist.map((item) => {
                                         return (
-                                            <div className={"flex items-center justify-between"}>
+                                            <div className={"flex items-center justify-between gap-1"}>
                                                 <div className={"flex items-center gap-2"}>
                                                     <span onClick={() => deleteTask(item, todoListlist.indexOf(item))}
                                                           className={"cursor-pointer"}>
@@ -143,7 +143,7 @@ export function SettingsMenu({deleteTask, editTask, changeOrder, todoListlist, h
                                                     <input type="text" name="todolistsomething"
                                                            id={todoListlist.indexOf(item) + "_list"}
                                                            value={item["NameOfTask"]}
-                                                           className={"outline-none bg-transparent text-white p-4 pt-1 pb-1 text-xl border-b-cyan-600 border-b w-80 focus:outline-none focus:border-b-cyan-400 transition-all"}
+                                                           className={"outline-none bg-transparent text-white p-4 pt-1 pb-1 text-xl border-b-cyan-600 border-b max-w-[20rem] flex-1 w-full focus:outline-none focus:border-b-cyan-400 transition-all"}
                                                            onChange={(event) => editTask(event.target.value, TodoList.indexOf(item["NameOfTask"]))}
                                                            maxLength={32}/>
                                                 </div>
@@ -166,8 +166,10 @@ export function SettingsMenu({deleteTask, editTask, changeOrder, todoListlist, h
                                 </div>
                             </div>
                         </div>
-                        <div className={"flex justify-center"}>
-                            <TodoListAdd handleAddTask={handleAddTask} hideTodo={true} id={"todo_item_add_settings"}/>
+                        <div
+                            className={"flex justify-center sticky bottom-0 w-full py-1 bg-neutral-900 items-center sm:flex-col"}>
+                            <TodoListAdd handleAddTask={handleAddTask} hideCloseButton={true}
+                                         id={"todo_item_add_settings"}/>
                         </div>
 
                     </div>
