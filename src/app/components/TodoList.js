@@ -7,6 +7,8 @@ import {TodoList, values} from "../func/values";
 import arrUp from "./../svg/chevron-up.svg"
 import arrDown from "./../svg/chevron-down.svg"
 
+const tickSound = new Audio(tickedUpSound)
+
 export function TodoListAdd(props) {
     const [taskName, setTaskName] = useState("");
 
@@ -34,7 +36,8 @@ export function TodoListAdd(props) {
 
 
     return (
-        <div className={"flex gap-2 flex-wrap sm:justify-center " + (props.hideCloseButton ? "justify-center" : "")} id={"add_things_to_" + props.id}>
+        <div className={"flex gap-2 flex-wrap sm:justify-center " + (props.hideCloseButton ? "justify-center" : "")}
+             id={"add_things_to_" + props.id}>
             <input type="text" name={"todo_item_add"} id={props.id}
                    className={"outline-none bg-transparent text-white p-4 pt-1 pb-1 text-xl border-b-cyan-600 border-b focus:outline-none focus:border-b-cyan-400 transition-all"}
                    onChange={handleInputChange} value={taskName} onKeyDown={function (event) {
@@ -42,14 +45,16 @@ export function TodoListAdd(props) {
                     handleAddButtonClick()
                     console.info("New Value Inserted")
                 }
-            }} placeholder={"Insert your plan"} maxLength={32}
+            }} placeholder={"Insert name of task"} maxLength={32}
             />
             <div className={"flex gap-2 sm:justify-center"}>
                 <button type={"button"} className={"text-white px-4 py-2 border border-gray-900 rounded-md bg-gray-900"}
                         onClick={handleAddButtonClick}>
                     Add to TODO list
                 </button>
-                <button type={"button"} className={"text-white px-4 py-2 border rounded-md " + (props.hideCloseButton ? "hidden" : "")} onClick={removeSelf}>
+                <button type={"button"}
+                        className={"text-white px-4 py-2 border rounded-md " + (props.hideCloseButton ? "hidden" : "")}
+                        onClick={removeSelf}>
                     Close
                 </button>
             </div>
@@ -75,7 +80,12 @@ export function TodoListItem({NameOfTask, IdOfTask, removeTask, changeOrder}) {
                 let selector = $('#' + IdOfTask + "_tick")
                 if (selector.hasClass("hidden")) {
                     selector.removeClass("hidden")
-                    new Audio(tickedUpSound).play()
+                    if (values.enable_sounds) {
+                        if (values.sound_on_tick_of_task) {
+                            tickSound.volume = values.volume_of_sounds
+                            tickSound.play()
+                        }
+                    }
                 } else if (!selector.hasClass("hidden")) {
                     selector.addClass("hidden")
                 }

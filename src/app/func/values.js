@@ -4,11 +4,14 @@ export const values = {
     duration_long_brake: 20,
     number_of_work: 0,
     number_of_work_before_long_brake: 4,
+    volume_of_sounds: 0,
     type_of_timer: "work",
     has_timer_been_running: false,
     set_timer_after_end_to_next: true,
     use_classic_pomodoro_mod: true,
     edit_mode_enabled: true,
+    sound_on_tick_of_task: true,
+    enable_sounds: true,
     actual_settings_window: "Timer"
 }
 //window.localStorage.setItem("values", JSON.stringify(values)) //pro uložení

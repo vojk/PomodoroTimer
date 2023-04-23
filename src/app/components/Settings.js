@@ -6,10 +6,13 @@ import $ from 'jquery'
 import {setDuration, setTime, StopTimer} from "../func/TimerHandler";
 import HelpIco from "../svg/help-circle.svg"
 import {SettingsTimer} from "./settings/SettingsTimer";
-import {ReactComponent as DeleteIco} from './../svg/x.svg';
 import {ReactComponent as Up} from './../svg/chevron-up.svg';
 import {ReactComponent as Down} from './../svg/chevron-down.svg';
+import {ReactComponent as DeleteIco} from './../svg/trash-2.svg';
 import {TodoListAdd} from "./TodoList";
+import {AboutWindow, ButtonShowAbout} from "./AboutWindow";
+import {SettingsSound} from "./settings/SettingsSound";
+import PresetsTodo from "./additionalComps/PresetsTodo";
 
 export function saveSettings() {
     StopTimer()
@@ -78,7 +81,7 @@ export const DivideLine = () => {
 }
 
 export function SettingsMenu({deleteTask, editTask, changeOrder, todoListlist, handleAddTask}) {
-    const [activeTab, tabActive] = useState(2)
+    const [activeTab, setActiveTab] = useState(2)
 
     return (
         <div
@@ -89,30 +92,31 @@ export function SettingsMenu({deleteTask, editTask, changeOrder, todoListlist, h
                 <img src={Close} alt="" className={"cursor-pointer"} onClick={SettingsView} id={"closeButton"}/>
             </div>
             <div className={"flex flex-1 sm:flex-col overflow-hidden"}>
-                <div className={"border-r border-r-gray-800 p-12 pt-10 sm:border-none sm:py-8"}>
+                <div
+                    className={"border-r border-r-gray-800 p-12 pt-10 sm:border-none sm:py-8 flex flex-col justify-between"}>
                     <ul className={"flex flex-col gap-4 text-xl select-none sm:flex-row sm:justify-between"}>
-                        <li className={"line-through text-gray-700"} onClick={() => tabActive(1)}>
-                            General
-                        </li>
                         <li className={(activeTab === 2 ? "text-white" : "text-gray-700") + " cursor-pointer hover:text-white transition-all"}
-                            onClick={() => tabActive(2)}>
+                            onClick={() => setActiveTab(2)}>
                             Timer
                         </li>
-                        <li className={" line-through text-gray-700"} onClick={() => tabActive(3)}>
-                            Sound
-                        </li>
                         <li className={(activeTab === 4 ? "text-white" : "text-gray-700") + " cursor-pointer hover:text-white transition-all"}
-                            onClick={() => tabActive(4)}>
+                            onClick={() => setActiveTab(4)}>
                             Todo
                         </li>
+
+                        <li className={(activeTab === 3 ? "text-white" : "text-gray-700") + " cursor-pointer hover:text-white transition-all"}
+                            onClick={() => setActiveTab(3)}>
+                            Sound
+                        </li>
                     </ul>
+                    <ButtonShowAbout activeTab={activeTab} setActiveTab={setActiveTab}/>
                 </div>
 
                 <div className={"p-8 w-full flex flex-col items-center  sm:min-h-1/2 sm:h-2/3 sm:py-2 h-16 h-[90%]"}
                      id={"TimerSettingsMenu"}>
                     <div>
                         <h2 className={"text-3xl font-bold mb-2"} id={"settingsHeader"}>
-                            {activeTab === 2 ? "Timer" : activeTab === 4 ? "Todo" : ""}
+                            {activeTab === 1 ? "General" : activeTab === 2 ? "Timer" : activeTab === 3 ? "Sound (*Beta)" : activeTab === 4 ? "Todo" : activeTab === 5 ? "About" : ""}
                         </h2>
                     </div>
 
@@ -122,16 +126,24 @@ export function SettingsMenu({deleteTask, editTask, changeOrder, todoListlist, h
                         <SettingsTimer/>
                     </div>
 
+                    <div
+                        className={"w-3/4 sm:w-full flex-col overflow-scroll overflow-x-hidden px-4 snap-x " + (activeTab === 3 ? "flex" : "hidden")}
+                        id={"soundSettings"}>
+                        <SettingsSound/>
+                    </div>
+
 
                     <div
                         className={"w-3/4 sm:w-full h-full flex flex-col px-4 overflow-x-hidden snap-x settingsWindow relative " + (activeTab === 4 ? "flex" : "hidden")}
                         id={"todoSettings"}>
-                        <div>
+                        <div className={"flex justify-between"}>
                             <h2 className={"text-2xl font-bold mt-2"}>List of tasks</h2>
                         </div>
                         <div className={"overflow-y-scroll h-full"}>
                             <div>
                                 <div className={"flex flex-col gap-2"}>
+                                    {todoListlist.length === 0 ?
+                                        <p className={"self-center text-xl"}>There are no tasks!</p> : ""}
                                     {todoListlist.map((item) => {
                                         return (
                                             <div className={"flex items-center justify-between gap-1"}>
@@ -171,7 +183,12 @@ export function SettingsMenu({deleteTask, editTask, changeOrder, todoListlist, h
                             <TodoListAdd handleAddTask={handleAddTask} hideCloseButton={true}
                                          id={"todo_item_add_settings"}/>
                         </div>
+                    </div>
 
+                    <div
+                        className={"w-3/4 sm:w-full h-full flex flex-col px-4 overflow-x-hidden snap-x settingsWindow relative gap-4 " + (activeTab === 5 ? "flex" : "hidden")}
+                        id={"Info_Window"}>
+                        <AboutWindow/>
                     </div>
 
 

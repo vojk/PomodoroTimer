@@ -1,13 +1,16 @@
 import {Switch} from "@headlessui/react";
 
-export default function SwitchSettings({id, checked, onChange}) {
+export default function SwitchSettings({id, checked, onChange, enabled}) {
+    if (enabled === undefined){
+        enabled = true
+    }
     return (
         <div>
             < Switch
                 checked={checked}
                 onChange={onChange}
                 id={id}
-                className={`${checked ? 'bg-blue-600' : 'bg-gray-800'} relative inline-flex h-6 w-11 items-center rounded-full`}
+                className={`${checked ? 'bg-blue-600' : 'bg-gray-800'} relative inline-flex h-6 w-11 items-center rounded-full ${enabled ? 'bg-blue-600' : 'bg-gray-800'}`}
             >
                 <span
                     className={`${

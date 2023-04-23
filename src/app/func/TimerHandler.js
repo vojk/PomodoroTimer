@@ -1,4 +1,4 @@
-import {values} from "../func/values";
+import {values} from "./values";
 import fiveMinuteWarning from '../audio/FiveMinutes.wav'
 import EndTimer from '../audio/EndTimer.wav'
 import $ from "jquery";
@@ -12,9 +12,16 @@ let hours = 0;
 let minutes = 0;
 let seconds = 0;
 
+let EndTimerSoundObj = new Audio(EndTimer)
+let fiveMinuteWarningSoundObj = new Audio(fiveMinuteWarning)
+
 
 function playAudio_FiveMinutes() {
-    new Audio(fiveMinuteWarning).play()
+    if (values.enable_sounds) {
+        console.log(values.volume_of_sounds)
+        fiveMinuteWarningSoundObj.volume = values.volume_of_sounds
+        fiveMinuteWarningSoundObj.play()
+    }
 }
 
 function toggleButtonToControlTimer() {
@@ -149,7 +156,12 @@ export function StartTimer() {
                     toggleButtonToControlTimer()
                 }
 
-                new Audio(EndTimer).play()
+
+                if (values.enable_sounds) {
+                    EndTimerSoundObj.volume = values.volume_of_sounds
+                    EndTimerSoundObj.play()
+                }
+
             }
         }, 1000);
     } else if (TimerIsRunning) {
