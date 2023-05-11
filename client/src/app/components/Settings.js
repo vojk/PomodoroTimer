@@ -1,18 +1,18 @@
-import SettingsIco from './../svg/settings.svg'
-import Close from './../svg/x.svg'
 import {useState} from "react";
-import {blockInvalidChar, TodoList, values} from "../func/values";
+import {TodoList, values} from "../func/values";
 import $ from 'jquery'
 import {setDuration, setTime, StopTimer} from "../func/TimerHandler";
 import HelpIco from "../svg/help-circle.svg"
 import {SettingsTimer} from "./settings/SettingsTimer";
+import {ReactComponent as Close} from './../svg/x.svg'
+import {ReactComponent as SettingsIco} from './../svg/settings.svg'
 import {ReactComponent as Up} from './../svg/chevron-up.svg';
 import {ReactComponent as Down} from './../svg/chevron-down.svg';
 import {ReactComponent as DeleteIco} from './../svg/trash-2.svg';
 import {TodoListAdd} from "./TodoList";
 import {AboutWindow, ButtonShowAbout} from "./AboutWindow";
 import {SettingsSound} from "./settings/SettingsSound";
-import PresetsTodo from "./additionalComps/PresetsTodo";
+import StopPropagation from "../func/StopPropagation";
 
 export function saveSettings() {
     StopTimer()
@@ -21,29 +21,13 @@ export function saveSettings() {
     setTime(document.getElementById("Timer_Viewer"))
 }
 
-export function SettingsButton() {
+export function SettingsButton({settingsOpen}) {
     return (
-        <div className={"cursor-pointer"} onClick={SettingsView} id={"settingsWindow"}>
-            <img src={SettingsIco} alt=""/>
+        <div className={"cursor-pointer"} onClick={settingsOpen} id={"settingsWindow"}>
+            <SettingsIco/>
         </div>
     )
 }
-
-export function SettingsView() {
-    const menu = $('#main_container_of_settings')
-    if (!menu.hasClass("hidden")) {
-        menu.addClass("hidden")
-    } else if (menu.hasClass("hidden")) {
-        menu.removeClass("hidden")
-    }
-}
-
-function closeAndSave() {
-    saveSettings()
-    SettingsView()
-}
-
-//w-4 h-4 rounded-full border-gray-700 border-2
 
 export function HelperWithSettings({helpText, id}) {
     const showHelpText = () => {
@@ -80,16 +64,24 @@ export const DivideLine = () => {
     )
 }
 
-export function SettingsMenu({deleteTask, editTask, changeOrder, todoListlist, handleAddTask}) {
+export function SettingsMenu({deleteTask, editTask, changeOrder, todoListlist, handleAddTask, handleOpen}) {
     const [activeTab, setActiveTab] = useState(2)
+
+    function closeAndSave() {
+        saveSettings()
+        handleOpen()
+    }
 
     return (
         <div
             className={"bg-neutral-900 w-2/3 h-2/3 flex flex-col rounded-2xl text-white relative min-h-[34rem] min-w-[42rem] sm:min-w-full sm:w-full sm:h-4/5"}
-            id={"settingMenuContainer"}>
+            onClick={(event) => StopPropagation(event)}>
             <div className={"flex border-b border-b-gray-800 items-center p-3 pl-8 pr-8 justify-between"}>
                 <h1 className={"text-2xl font-bold mt-0.5 select-none"}>Settings</h1>
-                <img src={Close} alt="" className={"cursor-pointer"} onClick={SettingsView} id={"closeButton"}/>
+                <div onClick={closeAndSave} className={"cursor-pointer"}>
+                    <Close/>
+                </div>
+
             </div>
             <div className={"flex flex-1 sm:flex-col overflow-hidden"}>
                 <div
