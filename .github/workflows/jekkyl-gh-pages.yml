@@ -19,7 +19,6 @@ jobs:
           args: >-                                # multi-line argument
             --standalone
             --output=build/index.html
-            README.md
       - name: Deploy on github pages              # Use a third-party plugin to upload the content
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
